@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-import * as Haptics from 'expo-haptics';
+// import * as Haptics from 'expo-haptics'; // Temporarily commented for demo
 import Svg, { Circle, Defs, LinearGradient as SvgLinearGradient, Stop } from 'react-native-svg';
 import Animated, {
   useSharedValue,
@@ -122,7 +122,7 @@ const CircularTimer: React.FC<CircularTimerProps> = ({
           withTiming(0.3, { duration: 1000 })
         );
         
-        runOnJS(Haptics.impactAsync)(Haptics.ImpactFeedbackStyle.Light);
+        // runOnJS(Haptics.impactAsync)(Haptics.ImpactFeedbackStyle.Light);
       }, 5000);
 
       return () => clearInterval(interval);
@@ -161,17 +161,17 @@ const CircularTimer: React.FC<CircularTimerProps> = ({
 
   const handleComplete = () => {
     setIsRunning(false);
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    // Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     onComplete();
   };
 
   const handleStartPause = () => {
     if (!isRunning) {
       setIsRunning(true);
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     } else {
       setIsRunning(false);
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     }
   };
 
@@ -179,12 +179,12 @@ const CircularTimer: React.FC<CircularTimerProps> = ({
     setIsRunning(false);
     setTimeLeft(duration * 60);
     progress.value = withTiming(0, { duration: 300 });
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
   };
 
   const handleCancel = () => {
     setIsRunning(false);
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     onCancel();
   };
 

@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { SessionType, TimerSession } from '../types';
 import { MMKV } from 'react-native-mmkv';
-import * as Notifications from 'expo-notifications';
-import * as Haptics from 'expo-haptics';
+// import * as Notifications from 'expo-notifications';
+// import * as Haptics from 'expo-haptics';
 
 // Initialize MMKV storage
 const storage = new MMKV();
@@ -150,8 +150,8 @@ export const useTimer = (): UseTimerReturn => {
     // Schedule completion notification
     scheduleCompletionNotification(duration * 60);
     
-    // Haptic feedback
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    // Haptic feedback (commented for demo)
+    // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
   };
 
   const pauseTimer = () => {
@@ -169,7 +169,7 @@ export const useTimer = (): UseTimerReturn => {
       saveSessionToStorage(updatedSession);
     }
     
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
   const resumeTimer = () => {
@@ -180,7 +180,7 @@ export const useTimer = (): UseTimerReturn => {
       // Reschedule notification
       scheduleCompletionNotification(timeLeft);
       
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     }
   };
 
@@ -188,10 +188,10 @@ export const useTimer = (): UseTimerReturn => {
     setIsRunning(false);
     setIsPaused(false);
     
-    // Cancel notification
-    if (notificationIdRef.current) {
-      Notifications.cancelScheduledNotificationAsync(notificationIdRef.current);
-    }
+    // Cancel notification (commented for demo)
+    // if (notificationIdRef.current) {
+    //   Notifications.cancelScheduledNotificationAsync(notificationIdRef.current);
+    // }
     
     // Update session as interrupted
     if (currentSession) {
@@ -210,7 +210,7 @@ export const useTimer = (): UseTimerReturn => {
     setTimeLeft(0);
     storage.delete('current_session');
     
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
   };
 
   const resetTimer = () => {
@@ -224,7 +224,7 @@ export const useTimer = (): UseTimerReturn => {
         Notifications.cancelScheduledNotificationAsync(notificationIdRef.current);
       }
       
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+      // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     }
   };
 
@@ -247,49 +247,20 @@ export const useTimer = (): UseTimerReturn => {
     setTimeLeft(0);
     
     // Success haptic
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    // Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     
     // Show completion notification
     showCompletionNotification();
   };
 
   const scheduleCompletionNotification = async (seconds: number) => {
-    try {
-      // Cancel existing notification
-      if (notificationIdRef.current) {
-        await Notifications.cancelScheduledNotificationAsync(notificationIdRef.current);
-      }
-      
-      // Schedule new notification
-      const notificationId = await Notifications.scheduleNotificationAsync({
-        content: {
-          title: '🎉 Session Complete!',
-          body: `Great job! Your ${currentSession?.title || 'focus session'} is finished.`,
-          sound: true,
-          priority: Notifications.AndroidNotificationPriority.HIGH,
-          vibrate: [0, 250, 250, 250],
-        },
-        trigger: {
-          seconds: seconds,
-        },
-      });
-      
-      notificationIdRef.current = notificationId;
-    } catch (error) {
-      console.error('Error scheduling notification:', error);
-    }
+    // Notifications disabled for demo
+    console.log(`Session will complete in ${seconds} seconds`);
   };
 
   const showCompletionNotification = async () => {
-    try {
-      await Notifications.presentNotificationAsync({
-        title: '🎉 Session Complete!',
-        body: `Congratulations! You've completed your ${currentSession?.title || 'focus session'}.`,
-        data: { sessionId: currentSession?.id },
-      });
-    } catch (error) {
-      console.error('Error showing completion notification:', error);
-    }
+    // Notifications disabled for demo
+    console.log('Session completed!');
   };
 
   const addToSessionHistory = (session: TimerSession) => {
