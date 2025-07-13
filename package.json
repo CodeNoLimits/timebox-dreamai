@@ -9,7 +9,10 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "build:android": "eas build --platform android --profile production",
-    "build:ios": "eas build --platform ios --profile production"
+    "build:ios": "eas build --platform ios --profile production",
+    "build:web": "expo export:web && cp -r web-build/* dist/",
+    "predeploy": "npm run build:web",
+    "deploy": "netlify deploy --prod --dir=dist"
   },
   "dependencies": {
     "expo": "~53.0.17",
